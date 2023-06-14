@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { useState, useContext, useEffect, useRef } from "react";
 import { Theme } from "../App";
 import { Swiper, SwiperSlide } from "swiper/react";
-import testimony1 from "../assets/testimony1.jpg"
-import testimony2 from "../assets/testimony2.jpg"
+import testimony1 from "../assets/testimony1.jpg";
+import testimony2 from "../assets/testimony2.jpg";
 
 // Import Swiper styles
 import "swiper/css";
@@ -42,35 +42,33 @@ export function LandingPage() {
 
   const colors = [testimony1, testimony2];
   const delay = 5000;
-    const [index, setIndex] = useState(0);
-    const timeoutRef = useRef(null);
-  
-    function resetTimeout() {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+  const [index, setIndex] = useState(0);
+  const timeoutRef = useRef(null);
+
+  function resetTimeout() {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
     }
-  
-    useEffect(() => {
+  }
+
+  useEffect(() => {
+    resetTimeout();
+    timeoutRef.current = setTimeout(
+      () =>
+        setIndex((prevIndex) =>
+          prevIndex === colors.length - 1 ? 0 : prevIndex + 1
+        ),
+      delay
+    );
+
+    return () => {
       resetTimeout();
-      timeoutRef.current = setTimeout(
-        () =>
-          setIndex((prevIndex) =>
-            prevIndex === colors.length - 1 ? 0 : prevIndex + 1
-          ),
-        delay
-      );
-  
-      return () => {
-        resetTimeout();
-      };
-    }, [index]);
-  
-  
+    };
+  }, [index]);
 
   return (
     <div className="bg-[#000009]">
-      <div className="landing h-[100vh]"></div>
+      <div className="landing h-[80vh]"></div>
       <div className="flex flex-col items-center mt-[2rem]">
         <img
           className="w-[50vw] border-y py-[2rem]"
@@ -81,21 +79,13 @@ export function LandingPage() {
         <div className="w-[90vw] text-center border-b pb-[1rem]">
           <h2 className="text-[2.5rem] font-bold">WHY STREETICALLY</h2>
           <p className="text-[1.5rem]">
-            Streetically is a team of photographers and videographers who
-            capture weddings in a unique and edgy style with a touch of
-            editorial feel. Our clients are friends, because when their big day
-            comes we get to CELEBRATE with them. We have a heart for exploration
-            and love to capture couples who are adventurous and love to create
-            something breathtaking. Today is documentary, Tomorrow is history
-            and that lasts a lifetime. Your wedding day is your story, its
-            beautiful, its messy, its totally unique and we are wild about
-            capturing every part of it. Our style of edits is the vintage /
-            editorial feel. 
+            We believe that your wedding day is one of the most important days
+            of your life, and we are honored to be a part of it. Let us help you
+            create memories that will last a lifetime with our unique and edgy
+            style with a touch of editorial feel.
           </p>
           <Link to="/About" className="flex flex-col items-center">
-            <div
-              className="border uppercase border-[#D3D3D3] text-[#ffffff] font-semibold text-2xl px-[2.5rem] m-[1rem] py-[0.3rem]"
-            >
+            <div className="border uppercase border-[#D3D3D3] text-[#ffffff] font-semibold text-2xl px-[2.5rem] m-[1rem] py-[0.3rem]">
               Learn More
             </div>
           </Link>
@@ -266,31 +256,19 @@ export function LandingPage() {
         </div>
       </div>
       <div className="slideshow">
-      <div
-        className="slideshowSlider"
-        style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
-      >
-        {colors.map((backgroundColor, index) => (
-          <div
-            className="slide"
-            key={index}
-          >
-            <img src={backgroundColor}/>
-          </div>
-        ))}
+        <div
+          className="slideshowSlider"
+          style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
+        >
+          {colors.map((backgroundColor, index) => (
+            <div className="slide" key={index}>
+              <img src={backgroundColor} />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
 
-<Footer/>
+      <Footer />
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
